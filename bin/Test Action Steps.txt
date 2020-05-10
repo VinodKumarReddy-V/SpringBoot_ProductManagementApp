@@ -1,0 +1,34 @@
+
+===================Test Action Steps for the App from Post Man =====================================
+
+POST : 
+
+localhost:8980/api/product/SaveData
+
+{
+	 "product_id": 2
+	,"product_type": "TV"
+	 ,"product_name": "LG"
+	 ,"rating": 4.2
+	 ,"comments": "It is very good product"
+}
+
+
+GET:
+localhost:8980/api/product/getById/3
+
+PUT:
+localhost:8980/api/product/updateComments
+
+{
+	 "product_id": 5
+	,"product_type": "TV"
+	 ,"product_name": "LG"
+	 ,"rating": 4.2
+	 ,"comments": "It is very Good good product"
+}
+
+
+DELETE:
+localhost:8980/api/product/deleteById/3
+
