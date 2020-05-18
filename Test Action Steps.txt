@@ -35,3 +35,6 @@ localhost:8980/api/product/deleteById/3
 
 GET:
 localhost:8980/api/product/searchInfo/TV/LG
+
+//To get only product details 
+localhost:8980/api/product/searchInfo/TV

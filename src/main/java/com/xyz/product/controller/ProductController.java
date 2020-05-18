@@ -1,5 +1,6 @@
 package com.xyz.product.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class ProductController {
 	@Autowired
 	ProductRepository productDb;
 
-	// Save inforamtion of a product with comments
+	// Save information of a product with comments
 	@PostMapping("/SaveData")
-	public String save(@RequestBody Product product) {
+	public String saveDtls(@RequestBody Product product) {
 
 		String msg = " ";
 		try {
@@ -40,7 +41,7 @@ public class ProductController {
 
 	}
 
-	// View saved product information
+	// View saved product information by id
 
 	@GetMapping("/getById/{id}")
 	public Product getProductById(@PathVariable String id) {
@@ -94,17 +95,26 @@ public class ProductController {
 	}
 
 //  Search product details based on Product Type and product name
+// if user pass only productType also get results 
+//	@GetMapping("/searchInfo/{productType}/{productName}")
+	@RequestMapping(value = { "/searchInfo/{productType}", "/searchInfo/{productType}/{productName}" })
+	public List<Product> findAllByProductTypeName(@PathVariable("productType") String productType,
+												@PathVariable(required = false) String productName) {
 
-	@GetMapping("/searchInfo/{productType}/{productName}")
-	public Product findAllByProductTypeName(@PathVariable("productType") String productType,
-			@PathVariable("productName") String productName) {
+		List<Product> srchObj = null;
+		if (productName == null && productType != null) {
 
-		Optional<Product> srchObj = productDb.findByProductTypeAndProductName(productType, productName);
-
-		if (srchObj.isPresent()) {
-			return srchObj.get();
+			srchObj = productDb.findByProductType(productType);
 		} else {
+
+			srchObj = productDb.findByProductTypeAndProductName(productType, productName);
+
+		}
+
+		if (srchObj.isEmpty()) {
 			return null;
+		} else {
+			return srchObj;
 		}
 
 	}
